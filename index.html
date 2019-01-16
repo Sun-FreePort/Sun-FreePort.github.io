@@ -521,7 +521,9 @@
 <h2 id="Branch（分支）"><a href="#Branch（分支）" class="headerlink" title="Branch（分支）"></a>Branch（分支）</h2><h3 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h3><p>git branch -b <em>branchName</em></p>
 <h3 id="获取其他分支的内容，并合并到本分支"><a href="#获取其他分支的内容，并合并到本分支" class="headerlink" title="获取其他分支的内容，并合并到本分支"></a>获取其他分支的内容，并合并到本分支</h3><p>获取本地分支：git pull <em>otherBranchName</em><br>获取远程分支：git pull <em>remoteName</em> <em>otherBranchName</em></p>
 <h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>git branch -D <em>branchName</em></p>
-<h4 id="删除远程已经不存在的分支"><a href="#删除远程已经不存在的分支" class="headerlink" title="删除远程已经不存在的分支"></a>删除远程已经不存在的分支</h4><p><code>git fetch *remoteName* -p</code><br><code>git branch -r | awk &#39;{print $1}&#39; | egrep -v -f /dev/fd/0 &lt;(git branch -vv | grep *remoteName*) | awk &#39;{print $1}&#39; | xargs git branch -D</code></p>
+<h4 id="删除远程已经不存在的分支"><a href="#删除远程已经不存在的分支" class="headerlink" title="删除远程已经不存在的分支"></a>删除远程已经不存在的分支</h4><p>用名称替换掉命令中的 <code>*remoteName*</code>。</p>
+<p><code>git fetch *remoteName* -p</code></p>
+<p><code>git branch -r | awk &#39;{print $1}&#39; | egrep -v -f /dev/fd/0 &lt;(git branch -vv | grep *remoteName*) | awk &#39;{print $1}&#39; | xargs git branch -D</code></p>
 
       
     </div>
