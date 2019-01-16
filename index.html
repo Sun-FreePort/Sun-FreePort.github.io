@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>UioSun &amp; NiceKingdom</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="UioSun &amp; NiceKingdom">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="UioSun &amp; NiceKingdom">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UioSun &amp; NiceKingdom">
+  
+    <link rel="alternate" href="/atom.xml" title="UioSun &amp; NiceKingdom" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">UioSun &amp; NiceKingdom</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-uncall-destruct-function" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/17/uncall-destruct-function/" class="article-date">
+  <time datetime="2018-12-17T08:35:19.000Z" itemprop="datePublished">2018-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/17/uncall-destruct-function/">uncall-destruct-function</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="未执行的析构函数"><a href="#未执行的析构函数" class="headerlink" title="未执行的析构函数"></a>未执行的析构函数</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在具体业务中，我遇到了“在类实例结束时，设定一个清理方法”的需求。<br>首先想到的自然是析构函数。我编写了简单的测试代码，想看看实例结束时，析构函数能否自动执行。结果并不美好：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $var = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'__construct: '</span> . spl_object_hash(<span class="keyword">$this</span>) . <span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'__destruct: '</span> . spl_object_hash(<span class="keyword">$this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">'Hello'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$test = <span class="keyword">new</span> A();</span><br><span class="line">$test-&gt;test();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Print result:</span></span><br><span class="line"><span class="comment">// __construct: 0000000045f0af9e00000000494744b0</span></span><br><span class="line"><span class="comment">// Fatal error: Uncaught Exception: Hello in...</span></span><br></pre></td></tr></table></figure>
+<p>但前辈指出，这段测试代码不调用析构函数的原因是：“作用域”。</p>
+<p>按照前辈的指点，来一段“会执行析构函数”的正常代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 与之前一致</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $test = <span class="keyword">new</span> A();</span><br><span class="line">    $test-&gt;test();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Print result:</span></span><br><span class="line"><span class="comment">// __construct: 000000004b11d811000000006f9a75c7</span></span><br><span class="line"><span class="comment">// __destruct: 000000004b11d811000000006f9a75c7</span></span><br><span class="line"><span class="comment">// Fatal error: Uncaught Exception: Hello in...</span></span><br></pre></td></tr></table></figure>
+<h2 id="分析结论"><a href="#分析结论" class="headerlink" title="分析结论"></a>分析结论</h2><ol>
+<li>引用计数大于 0 的对象实例，无法触发析构函数的调用钩子；</li>
+<li>全局作用域的销毁位于析构函数的钩子之后，导致了全局变量作为对象实例时，析构函数永远不会被调用。</li>
+</ol>
+<h2 id="分析流程"><a href="#分析流程" class="headerlink" title="分析流程"></a>分析流程</h2><p>我们将对象实例放到了函数内部，从而得到了“析构函数正常执行”的结果。</p>
+<p>如此，首先要找一个作为切入口的基本问题：析构函数在什么时候被自动调用？</p>
+<h3 id="何时调用析构函数？"><a href="#何时调用析构函数？" class="headerlink" title="何时调用析构函数？"></a>何时调用析构函数？</h3><p>想了解这个问题，就要去看看官方文档如何介绍<a href="http://php.net/manual/zh/language.oop5.decon.php#language.oop5.decon.destructor" target="_blank" rel="noopener">析构函数</a>：</p>
+<blockquote>
+<p>析构函数会在“某个对象的所有引用都被删除”或者当“对象被显式销毁”时执行。</p>
+</blockquote>
+<p>由上可知：当引用计数为 0，或对象实例被手动销毁，析构函数会自动调用。</p>
+<p>我们得出推论：正确的测试代码中，正是因为函数的作用域率先销毁，对象实例的引用计数因此为 0，才得以触发析构函数的钩子。</p>
+<p>我们可以通过这个问题，来验证推论：</p>
+<ol>
+<li>全局作用域的普通变量，与函数作用域的普通变量，分别在什么时候引用计数为 0？</li>
+</ol>
+<h3 id="变量的销毁时间点"><a href="#变量的销毁时间点" class="headerlink" title="变量的销毁时间点"></a>变量的销毁时间点</h3><h4 id="函数（局部）"><a href="#函数（局部）" class="headerlink" title="函数（局部）"></a>函数（局部）</h4><p>我们都用过函数，所以这个问题很清楚：一个函数内部定义的变量，外部是无法直接使用的。函数内变量的销毁时间，就等同于函数作用域的结束时间。</p>
+<p>问题来了：函数作用域何时结束？</p>
+<p>关于这个问题，我们可以从官方文档的<a href="http://php.net/manual/zh/functions.returning-values.php" target="_blank" rel="noopener">返回值</a>中，得到相对合理的解释：</p>
+<blockquote>
+<p>返回语句会立即中止函数的运行，并且将控制权交回调用该函数的代码行。</p>
+</blockquote>
+<p>直白的说，一旦执行 <code>return</code> 或代码执行完毕，函数内部的作用域就会结束。由此，我们证实了上一个问题的推论的 50%。</p>
+<h4 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h4><p>其实，全局的普通变量等同于全局变量，所以这个问题就演化为：全局作用域何时销毁？</p>
+<h3 id="全局作用域何时销毁？"><a href="#全局作用域何时销毁？" class="headerlink" title="全局作用域何时销毁？"></a>全局作用域何时销毁？</h3><p>这关系到 PHP 的生命周期（请求结束的部分），我只简单地摘要出两条必须的信息：</p>
+<ol>
+<li>zend_call_destructors() - shutdown_destructors()：它对资源做了一些清理工作，同时，也负责 <strong>为即将结束的变量，调用析构函数</strong>。</li>
+<li>zend_post_deactivate_modules()：它负责 <strong>销毁全局变量</strong>。</li>
+</ol>
+<p>以上两条信息按执行顺序排列。</p>
+<p>最终答案出炉：全局变量的销毁位于析构函数的调用后，导致析构函数尝试调用时，全局变量因为存在引用计数（&gt; 1），错过了析构函数的调用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>定义在全局的普通变量，会违背直觉的成为全局变量，正是忽略了这一点，才导致测试的错误。</p>
+<p>本次总结中，还有两个没有讲解的知识点：</p>
+<ol>
+<li><p><a href="http://php.net/manual/zh/features.gc.refcounting-basics.php" target="_blank" rel="noopener">引用计数 - PHPDoc</a><br>PHP 的内存垃圾清理机制之一，同时也是早期 PHP 饱受诟病的内存泄漏的原因之一，后来被垃圾回收机制所弥补。<br>对于安装了 XDebug 的 PHP 环境，可以通过 <code>xdebug_debug_zval (string $var_name)</code> 函数来了解某个变量的被引用次数。</p>
+</li>
+<li><p><a href="https://raw.githubusercontent.com/pangudashu/php7-internal/master/img/php.png" target="_blank" rel="noopener">PHP7 生命周期</a><br>了解一个 PHP 请求的从生到死，并合理安排它的一生。</p>
+</li>
+</ol>
+<h2 id="延展"><a href="#延展" class="headerlink" title="延展"></a>延展</h2><h3 id="何时销毁全局的普通变量？"><a href="#何时销毁全局的普通变量？" class="headerlink" title="何时销毁全局的普通变量？"></a>何时销毁全局的普通变量？</h3><p>面对这个问题，首先要搞明白“在全局范围设定一个普通变量，这意味着什么？”</p>
+<p>官方文档依然是解谜的明灯，在<a href="http://php.net/manual/zh/language.variables.scope.php#language.variables.scope.global" target="_blank" rel="noopener">变量</a>中有这样的例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 global</span></span><br><span class="line"></span><br><span class="line">$a = <span class="number">1</span>;</span><br><span class="line">$b = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Sum</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $a, $b;</span><br><span class="line"></span><br><span class="line">    $b = $a + $b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Sum();</span><br><span class="line"><span class="keyword">echo</span> $b;</span><br></pre></td></tr></table></figure>
+<p>所以，<strong>全局范围的普通变量</strong> = <strong>全局变量</strong>。</p>
+<h3 id="内存常驻与内存溢出"><a href="#内存常驻与内存溢出" class="headerlink" title="内存常驻与内存溢出"></a>内存常驻与内存溢出</h3><p>我最初得到错误测试结果后，转而使用了 <code>register_shutdown_function</code> 方法，在 <code>PHP-FPM</code> 中，我们还可以忽视在整个生命周期的长度内注册一个函数。</p>
+<p>但使用 <code>Swoole</code> 这类内存常驻的引擎时，它作为辅助 <code>Work</code> 进程的方法，一般都是跟随 <code>Master</code> 常驻在内存中。考虑到一个项目稳定运行的时间长度可能长达数年，在执行高内存占用的操作，或设计一种内存动态增长的场景时，内存溢出是极有可能的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/17/uncall-destruct-function/" data-id="cjqyx7rmk0009d8v0l0o7sq7q" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/20/hello-world/" class="article-date">
+  <time datetime="2018-11-20T02:30:41.667Z" itemprop="datePublished">2018-11-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/20/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/20/hello-world/" data-id="cjqyx7rm50003d8v0dkwrke2r" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-learn-path" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/16/learn-path/" class="article-date">
+  <time datetime="2018-11-16T02:53:57.000Z" itemprop="datePublished">2018-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/16/learn-path/">learn-path</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><h2 id="入门级"><a href="#入门级" class="headerlink" title="入门级"></a>入门级</h2><p><a href="https://gitbook.tw/#git--1" target="_blank" rel="noopener">《為你自己學 Git》</a>（简略 H5 版，高建龙 著）</p>
+<h2 id="专业级"><a href="#专业级" class="headerlink" title="专业级"></a>专业级</h2><p><a href="https://git-scm.com/book/zh/v2/" target="_blank" rel="noopener">Git之书</a>，Git 的官方学习文档</p>
+<h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><h2 id="入门级-1"><a href="#入门级-1" class="headerlink" title="入门级"></a>入门级</h2><p><a href="https://moonbingbing.gitbooks.io/openresty-best-practices/content/ngx/nginx.html" target="_blank" rel="noopener">OpenResty最佳实践 - Nginx 部分</a></p>
+<h1 id="SASS"><a href="#SASS" class="headerlink" title="SASS"></a>SASS</h1><h2 id="入门级-2"><a href="#入门级-2" class="headerlink" title="入门级"></a>入门级</h2><p><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" target="_blank" rel="noopener">SASS用法指南 - 阮一峰</a><br><a href="http://sass-lang.com/guide" target="_blank" rel="noopener">Sass Basics</a></p>
+<h2 id="入门级（Detail）"><a href="#入门级（Detail）" class="headerlink" title="入门级（Detail）"></a>入门级（Detail）</h2><p><a href="https://www.sasscss.com/getting-started/" target="_blank" rel="noopener">Sass 快速入门 - Sass 中文网</a></p>
+<h2 id="专业级-1"><a href="#专业级-1" class="headerlink" title="专业级"></a>专业级</h2><p><a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html" target="_blank" rel="noopener">Sass Document</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/16/learn-path/" data-id="cjqyx7rmb0005d8v0fv4uhwk9" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习路径/">学习路径</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-learn-week-2" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/06/learn-week-2/" class="article-date">
+  <time datetime="2018-11-06T02:06:33.000Z" itemprop="datePublished">2018-11-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/06/learn-week-2/">学习周记（#2）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h1><p><em>本周计划：每日一个函数。</em></p>
+<h2 id="array-count-values（一）"><a href="#array-count-values（一）" class="headerlink" title="array_count_values（一）"></a>array_count_values（一）</h2><p>统计数组中，值出现的次数。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>被统计数组</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-diff-assoc（二）"><a href="#array-diff-assoc（二）" class="headerlink" title="array_diff_assoc（二）"></a>array_diff_assoc（二）</h2><p>检查数组差集。</p>
+<p>检查标准：键值对在比较数组中，是否不存在（其一不匹配，都不算匹配）</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>从第二个起，后续数组均是比较数组</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-diff-key（三）"><a href="#array-diff-key（三）" class="headerlink" title="array_diff_key（三）"></a>array_diff_key（三）</h2><p>检查数组差集。</p>
+<p>检查标准：键在比较数组中，是否不存在</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>从第二个起，后续数组均是比较数组</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-diff-uassoc（四）"><a href="#array-diff-uassoc（四）" class="headerlink" title="array_diff_uassoc（四）"></a>array_diff_uassoc（四）</h2><p>检查数组差集，与 <code>array_diff_assoc</code> 极为近似。</p>
+<p>检查标准：通过用户自定义函数，获得 key-value 不同项</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>从第二个起，后续数组均是比较数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>callback</td>
+<td>自定义函数，返回值等价于 bool 类型的匹配结果</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-diff-ukey（五）"><a href="#array-diff-ukey（五）" class="headerlink" title="array_diff_ukey（五）"></a>array_diff_ukey（五）</h2><p>检查数组差集，与 <code>array_diff_key</code> 极为近似。</p>
+<p>检查标准：通过用户自定义函数，获得 key 不同项</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>从第二个起，后续数组均是比较数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>callback</td>
+<td>自定义函数，返回值等价于 bool 类型的匹配结果</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-diff（六）"><a href="#array-diff（六）" class="headerlink" title="array_diff（六）"></a>array_diff（六）</h2><p>检查数组差集，与 <code>array_diff_key</code> 极为近似。</p>
+<p>检查标准：通过用户自定义函数，获得 key 不同项</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>从第二个起，后续数组均是比较数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>callback</td>
+<td>自定义函数，返回值等价于 bool 类型的匹配结果</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-fill-keys（七）"><a href="#array-fill-keys（七）" class="headerlink" title="array_fill_keys（七）"></a>array_fill_keys（七）</h2><p>将参数组合成数组。如果 value 是数组，新数组中所有的 value 都会是完整的 value 参数</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>key，挨个作为键值</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>mixed</td>
+<td>value，每个 value 值都是完整的一个</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/06/learn-week-2/" data-id="cjqyx7rmh0007d8v0jx5hjkuz" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/每周笔记/">每周笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-git-cheat-sheet" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/26/git-cheat-sheet/" class="article-date">
+  <time datetime="2018-10-26T03:03:53.000Z" itemprop="datePublished">2018-10-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/26/git-cheat-sheet/">Git Cheat Sheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Git-速查表"><a href="#Git-速查表" class="headerlink" title="Git 速查表"></a>Git 速查表</h1><p>For the girl.</p>
+<h2 id="System（系统）"><a href="#System（系统）" class="headerlink" title="System（系统）"></a>System（系统）</h2><h3 id="获取版本"><a href="#获取版本" class="headerlink" title="获取版本"></a>获取版本</h3><p>git –version</p>
+<h3 id="设定用户信息"><a href="#设定用户信息" class="headerlink" title="设定用户信息"></a>设定用户信息</h3><p>用户名：git config –global user.name “UioSun”<br>邮箱：git config –global user.email <a href="mailto:uiosun@outlook.com" target="_blank" rel="noopener">uiosun@outlook.com</a><br>（这关系到你的提交是否对应你的账户）</p>
+<h3 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h3><p>git config –list [–[global|local]]<br>（配置分为本仓库、全局、系统三级，从高到低的优先级顺序是：从前到后）</p>
+<h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><p>git config –global alias.co checkout</p>
+<p>使用：git co master # 等价于 git checkout master</p>
+<h2 id="Commit（提交）"><a href="#Commit（提交）" class="headerlink" title="Commit（提交）"></a>Commit（提交）</h2><h3 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h3><p>保留代码：git reset <strong>–soft</strong> HEAD<br>丢弃代码（从当前改动到过去某次 Commit 之间的所有代码）：git reset <strong>–hard</strong> HEAD</p>
+<p>撤销至特定操作（完成时）：git reset –soft <strong>HashOrShortHash</strong><br>撤销至一次 Commit 之前：git reset –soft HEAD^<br>撤销至两次 Commit 之前：git reset –soft HEAD^^<br>（一次 Commit 等价于一个^符号）</p>
+<h3 id="操作记录"><a href="#操作记录" class="headerlink" title="操作记录"></a>操作记录</h3><p>通过 Shell 操作（譬如 q 退出、Space（空格） 向下翻页，b 向上翻页，etc.）</p>
+<p>git reflog</p>
+<p>格式化版本：git reflog –pretty=format:’%H %s [%ci]’<br>格式化推荐参考：<a href="https://havee.me/linux/2015-05/git-pretty-output.html" target="_blank" rel="noopener">https://havee.me/linux/2015-05/git-pretty-output.html</a></p>
+<h2 id="Remote（远程）"><a href="#Remote（远程）" class="headerlink" title="Remote（远程）"></a>Remote（远程）</h2><h3 id="关联远程仓库"><a href="#关联远程仓库" class="headerlink" title="关联远程仓库"></a>关联远程仓库</h3><p>git remote add <em>remoteName</em> <em>remoteURL</em></p>
+<h3 id="获取远程仓库的内容"><a href="#获取远程仓库的内容" class="headerlink" title="获取远程仓库的内容"></a>获取远程仓库的内容</h3><p>git fetch <em>remoteName</em></p>
+<h4 id="获取内容并更新远程-amp-本地分支对应关系"><a href="#获取内容并更新远程-amp-本地分支对应关系" class="headerlink" title="获取内容并更新远程&amp;本地分支对应关系"></a>获取内容并更新远程&amp;本地分支对应关系</h4><p>git fetch <em>remoteName</em> -p</p>
+<h2 id="Branch（分支）"><a href="#Branch（分支）" class="headerlink" title="Branch（分支）"></a>Branch（分支）</h2><h3 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h3><p>git branch -b <em>branchName</em></p>
+<h3 id="获取其他分支的内容，并合并到本分支"><a href="#获取其他分支的内容，并合并到本分支" class="headerlink" title="获取其他分支的内容，并合并到本分支"></a>获取其他分支的内容，并合并到本分支</h3><p>获取本地分支：git pull <em>otherBranchName</em><br>获取远程分支：git pull <em>remoteName</em> <em>otherBranchName</em></p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>git branch -D <em>branchName</em></p>
+<h4 id="删除远程已经不存在的分支"><a href="#删除远程已经不存在的分支" class="headerlink" title="删除远程已经不存在的分支"></a>删除远程已经不存在的分支</h4><p>git branch -r | awk ‘{print $1}’ | egrep -v -f /dev/fd/0 &lt;(git branch -vv | grep <em>remoteName</em>) | awk ‘{print $1}’ | xargs git branch -d</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/26/git-cheat-sheet/" data-id="cjqyx7rmd0006d8v0pecpvfd5" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-learn-week-1" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/25/learn-week-1/" class="article-date">
+  <time datetime="2018-10-25T13:40:09.000Z" itemprop="datePublished">2018-10-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/25/learn-week-1/">学习周记（#1）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h1><p><em>本周计划：每日一个函数。</em></p>
+<h2 id="array-change-key-case"><a href="#array-change-key-case" class="headerlink" title="array_change_key_case"></a>array_change_key_case</h2><p>将所有键名修改为全大写或小写</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>int</td>
+<td>转化目标，值为：<code>CASE_LOWER</code>/<code>CASE_UPPER</code></td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-chunk"><a href="#array-chunk" class="headerlink" title="array_chunk"></a>array_chunk</h2><p>将数组按数量分割为多个新数组</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>int</td>
+<td>新数组长度</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>bool</td>
+<td>保留数组键名，默认为 <code>false</code></td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-column"><a href="#array-column" class="headerlink" title="array_column"></a>array_column</h2><p>获取多维数组中指定列</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>mixed</td>
+<td>目标列（数字下标、键、属性名等，为 <code>null</code> 将返回整个数组）</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>mixed</td>
+<td>另一目标列，将该列的值设为键，默认为 <code>null</code></td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-combine"><a href="#array-combine" class="headerlink" title="array_combine"></a>array_combine</h2><p>使用两个数组作为键值对，创建新数组</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>键名数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>键值数组</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>两数组长度不同，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/25/learn-week-1/" data-id="cjqyx7rkq0002d8v05mw5qq4l" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/每周笔记/">每周笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习路径/">学习路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/每周笔记/">每周笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签索引</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/PHP/" style="font-size: 20px;">PHP</a> <a href="/tags/学习路径/" style="font-size: 10px;">学习路径</a> <a href="/tags/每周笔记/" style="font-size: 20px;">每周笔记</a> <a href="/tags/问题/" style="font-size: 10px;">问题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">时间索引</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/12/17/uncall-destruct-function/">uncall-destruct-function</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/20/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/16/learn-path/">learn-path</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/06/learn-week-2/">学习周记（#2）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/26/git-cheat-sheet/">Git Cheat Sheet</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 UioSun<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

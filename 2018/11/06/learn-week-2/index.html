@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>学习周记（#2） | UioSun &amp; NiceKingdom</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PHP本周计划：每日一个函数。 array_count_values（一）统计数组中，值出现的次数。    类型 值 注释     参数值 array 被统计数组   返回值 array/bool 数组值为 Key，次数为 Value。传入值非数组时，返回 null    array_diff_assoc（二）检查数组差集。 检查标准：键值对在比较数组中，是否不存在（其一不匹配，都不算匹配）">
+<meta name="keywords" content="每周笔记,PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习周记（#2）">
+<meta property="og:url" content="http://yoursite.com/2018/11/06/learn-week-2/index.html">
+<meta property="og:site_name" content="UioSun &amp; NiceKingdom">
+<meta property="og:description" content="PHP本周计划：每日一个函数。 array_count_values（一）统计数组中，值出现的次数。    类型 值 注释     参数值 array 被统计数组   返回值 array/bool 数组值为 Key，次数为 Value。传入值非数组时，返回 null    array_diff_assoc（二）检查数组差集。 检查标准：键值对在比较数组中，是否不存在（其一不匹配，都不算匹配）">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-20T02:30:41.668Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习周记（#2）">
+<meta name="twitter:description" content="PHP本周计划：每日一个函数。 array_count_values（一）统计数组中，值出现的次数。    类型 值 注释     参数值 array 被统计数组   返回值 array/bool 数组值为 Key，次数为 Value。传入值非数组时，返回 null    array_diff_assoc（二）检查数组差集。 检查标准：键值对在比较数组中，是否不存在（其一不匹配，都不算匹配）">
+  
+    <link rel="alternate" href="/atom.xml" title="UioSun &amp; NiceKingdom" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">UioSun &amp; NiceKingdom</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-learn-week-2" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/06/learn-week-2/" class="article-date">
+  <time datetime="2018-11-06T02:06:33.000Z" itemprop="datePublished">2018-11-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      学习周记（#2）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h1><p><em>本周计划：每日一个函数。</em></p>
+<h2 id="array-count-values（一）"><a href="#array-count-values（一）" class="headerlink" title="array_count_values（一）"></a>array_count_values（一）</h2><p>统计数组中，值出现的次数。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>被统计数组</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-diff-assoc（二）"><a href="#array-diff-assoc（二）" class="headerlink" title="array_diff_assoc（二）"></a>array_diff_assoc（二）</h2><p>检查数组差集。</p>
+<p>检查标准：键值对在比较数组中，是否不存在（其一不匹配，都不算匹配）</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>从第二个起，后续数组均是比较数组</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-diff-key（三）"><a href="#array-diff-key（三）" class="headerlink" title="array_diff_key（三）"></a>array_diff_key（三）</h2><p>检查数组差集。</p>
+<p>检查标准：键在比较数组中，是否不存在</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>从第二个起，后续数组均是比较数组</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-diff-uassoc（四）"><a href="#array-diff-uassoc（四）" class="headerlink" title="array_diff_uassoc（四）"></a>array_diff_uassoc（四）</h2><p>检查数组差集，与 <code>array_diff_assoc</code> 极为近似。</p>
+<p>检查标准：通过用户自定义函数，获得 key-value 不同项</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>从第二个起，后续数组均是比较数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>callback</td>
+<td>自定义函数，返回值等价于 bool 类型的匹配结果</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-diff-ukey（五）"><a href="#array-diff-ukey（五）" class="headerlink" title="array_diff_ukey（五）"></a>array_diff_ukey（五）</h2><p>检查数组差集，与 <code>array_diff_key</code> 极为近似。</p>
+<p>检查标准：通过用户自定义函数，获得 key 不同项</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>从第二个起，后续数组均是比较数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>callback</td>
+<td>自定义函数，返回值等价于 bool 类型的匹配结果</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-diff（六）"><a href="#array-diff（六）" class="headerlink" title="array_diff（六）"></a>array_diff（六）</h2><p>检查数组差集，与 <code>array_diff_key</code> 极为近似。</p>
+<p>检查标准：通过用户自定义函数，获得 key 不同项</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>目标数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>从第二个起，后续数组均是比较数组</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>callback</td>
+<td>自定义函数，返回值等价于 bool 类型的匹配结果</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="array-fill-keys（七）"><a href="#array-fill-keys（七）" class="headerlink" title="array_fill_keys（七）"></a>array_fill_keys（七）</h2><p>将参数组合成数组。如果 value 是数组，新数组中所有的 value 都会是完整的 value 参数</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数值</td>
+<td>array</td>
+<td>key，挨个作为键值</td>
+</tr>
+<tr>
+<td>参数值</td>
+<td>mixed</td>
+<td>value，每个 value 值都是完整的一个</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>array/bool</td>
+<td>数组值为 Key，次数为 Value。传入值非数组时，返回 <code>null</code></td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/06/learn-week-2/" data-id="cjqyx7rmh0007d8v0jx5hjkuz" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/每周笔记/">每周笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/16/learn-path/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">新一篇</strong>
+      <div class="article-nav-title">
+        
+          learn-path
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/26/git-cheat-sheet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">旧一篇</strong>
+      <div class="article-nav-title">Git Cheat Sheet</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习路径/">学习路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/每周笔记/">每周笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签索引</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/PHP/" style="font-size: 20px;">PHP</a> <a href="/tags/学习路径/" style="font-size: 10px;">学习路径</a> <a href="/tags/每周笔记/" style="font-size: 20px;">每周笔记</a> <a href="/tags/问题/" style="font-size: 10px;">问题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">时间索引</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/12/17/uncall-destruct-function/">uncall-destruct-function</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/20/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/16/learn-path/">learn-path</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/06/learn-week-2/">学习周记（#2）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/26/git-cheat-sheet/">Git Cheat Sheet</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 UioSun<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
